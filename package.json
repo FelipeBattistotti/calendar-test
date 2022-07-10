@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
+    "start": "expo start --clear",
+    "a": "expo start --android --clear",
+    "i": "expo start --ios",
+    "w": "expo start --web --clear",
     "eject": "expo eject"
   },
   "dependencies": {
@@ -19,6 +19,5 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
-  },
-  "private": true
+  }
 }
