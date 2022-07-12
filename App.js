@@ -15,9 +15,9 @@ const locale = {
     monthsShort: 'Jan_Fev_Mar_Abr_Mai_Jun_Jul_Ago_Set_Out_Nov_Dez'.split(
       '_'
     ),
-    weekdays: 'Dimanche_Lundi_Mardi_Mercredi_Jeudi_Vendredi_Samedi'.split('_'),
-    weekdaysShort: 'Dim_Lun_Mar_Mer_Jeu_Ven_Sam'.split('_'),
-    weekdaysMin: 'Di_Lu_Ma_Me_Je_Ve_Sa'.split('_'),
+    weekdays: 'Domingo_Segunda-feira_Terça-feira_Quarta-feira_Quinta-feira_Sexta-feira_Sábado'.split('_'),
+    weekdaysShort: 'Dom_Seg_Ter_Qua_Qui_Sex_Sáb'.split('_'),
+    weekdaysMin: 'Do_Se_Te_Qa_Qi_Se_Sá'.split('_'),
     longDateFormat: {
       LT: 'HH:mm',
       LTS: 'HH:mm:ss',
@@ -27,11 +27,11 @@ const locale = {
       LLLL: 'dddd D MMMM YYYY LT'
     },
     calendar: {
-      sameDay: "[Aujourd'hui à] LT",
-      nextDay: '[Demain à] LT',
-      nextWeek: 'dddd [à] LT',
-      lastDay: '[Hier à] LT',
-      lastWeek: 'dddd [dernier à] LT',
+      sameDay: "[Hoje às] LT",
+      nextDay: '[Amanhã às] LT',
+      nextWeek: 'dddd [no] LT',
+      lastDay: '[Ontem às] LT',
+      lastWeek: 'dddd [último a] LT',
       sameElse: 'L'
     },
     relativeTime: {
@@ -79,13 +79,26 @@ export default function App() {
       <View style={styles.container0}>
         <CalendarStrip
           scrollable
-          style={{height:200, paddingTop: 20, paddingBottom: 10}}
-          calendarColor={'#3343CE'}
-          calendarHeaderStyle={{color: 'white'}}
-          dateNumberStyle={{color: 'white'}}
-          dateNameStyle={{color: 'white'}}
-          iconContainer={{flex: 0.1}}
           locale={locale}
+          style={{
+            height:180,
+            paddingTop: 30,
+            paddingBottom: 10
+          }}
+          calendarColor={'#3343CE'}
+          calendarHeaderStyle={{
+            color: 'white',
+            fontSize: 15
+          }}
+          dateNumberStyle={{
+            color: 'white',
+            fontSize: 14
+          }}
+          dateNameStyle={{
+            color: 'white',
+            fontSize: 14
+          }}
+          iconContainer={{flex: 0.1}}
         />
       </View>
     </>
