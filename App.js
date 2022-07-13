@@ -1,9 +1,13 @@
+import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import {
   StyleSheet,
-  View
+  View,
+  TouchableOpacity,
+  Text
 } from 'react-native'
 import CalendarStrip from 'react-native-calendar-strip'
+import moment from 'moment-timezone'
 import 'moment/locale/br'
 
 const locale = {
@@ -35,25 +39,25 @@ const locale = {
       sameElse: 'L'
     },
     relativeTime: {
-      future: 'dans %s',
-      past: 'il y a %s',
-      s: 'quelques secondes',
-      m: 'une minute',
-      mm: '%d minutes',
-      h: 'une heure',
-      hh: '%d heures',
-      d: 'un jour',
-      dd: '%d jours',
-      M: 'un mois',
-      MM: '%d mois',
-      y: 'une année',
-      yy: '%d années'
+      future: 'em %s',
+      past: 'há %s',
+      s: 'alguns segundos',
+      m: 'um minuto',
+      mm: '%d minutos',
+      h: 'uma hora',
+      hh: '%d horas',
+      d: 'um dia',
+      dd: '%d dias',
+      M: 'um mês',
+      MM: '%d meses',
+      y: 'um ano',
+      yy: '%d anos'
     },
-    ordinalParse: /\d{1,2}(er|ème)/,
+    ordinalParse: /\d{1,2}(é|º)/,
     ordinal: function(number) {
-      return number + (number === 1 ? 'er' : 'ème');
+      return number + (number === 1 ? 'é' : 'º');
     },
-    meridiemParse: /PD|MD/,
+    meridiemParse: /AM|PM/,
     isPM: function(input) {
       return input.charAt(0) === 'M';
     },
@@ -63,7 +67,7 @@ const locale = {
     //     return /* 0-23 hour, given meridiem token and hour 1-12 */
     // },
     meridiem: function(hours, minutes, isLower) {
-      return hours < 12 ? 'PD' : 'MD';
+      return hours < 12 ? 'AM' : 'PM';
     },
     week: {
       dow: 1, // Monday is the first day of the week.
@@ -73,6 +77,11 @@ const locale = {
 }
 
 export default function App() {
+
+  const [dark, setDark] = useState(false)
+  const [selectedDay, setSelectedDay] = useState(moment().tz("America/Sao_Paulo").format())
+  console.log(selectedDay)
+
   return (
     <>
       <StatusBar style="auto" />
@@ -80,12 +89,14 @@ export default function App() {
         <CalendarStrip
           scrollable
           locale={locale}
+          selectedDate={selectedDay}
+          onDateSelected={date => setSelectedDay(date.subtract(12, 'h'))}
           style={{
             height:180,
             paddingTop: 30,
             paddingBottom: 10
           }}
-          calendarColor={'#3343CE'}
+          calendarColor={dark ? '#001122' : '#3343CE'}
           calendarHeaderStyle={{
             color: 'white',
             fontSize: 15
@@ -99,7 +110,13 @@ export default function App() {
             fontSize: 14
           }}
           iconContainer={{flex: 0.1}}
+          daySelectionAnimation={{type: 'border', duration: 200, borderWidth: 1, borderHighlightColor: 'white'}}
         />
+
+        <TouchableOpacity onPress={() => setDark(!dark)}>
+          <Text>Dark</Text>
+        </TouchableOpacity>
+
       </View>
     </>
   )
