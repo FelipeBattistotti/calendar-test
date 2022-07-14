@@ -8,7 +8,6 @@ import {
 } from 'react-native'
 import CalendarStrip from 'react-native-calendar-strip'
 import moment from 'moment-timezone'
-import 'moment/locale/br'
 
 const locale = {
   name: 'br',
