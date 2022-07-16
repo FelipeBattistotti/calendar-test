@@ -9,38 +9,41 @@ import {
 import CalendarStrip from 'react-native-calendar-strip'
 import moment from 'moment-timezone'
 
-const locale = {
-  name: 'br',
+const ptBr = {
+  name: 'pt-br',
   config: {
-    months: 'Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro'.split(
-      '_'
-    ),
-    monthsShort: 'Jan_Fev_Mar_Abr_Mai_Jun_Jul_Ago_Set_Out_Nov_Dez'.split(
-      '_'
-    ),
-    weekdays: 'Domingo_Segunda-feira_Terça-feira_Quarta-feira_Quinta-feira_Sexta-feira_Sábado'.split('_'),
-    weekdaysShort: 'Dom_Seg_Ter_Qua_Qui_Sex_Sáb'.split('_'),
-    weekdaysMin: 'Do_Se_Te_Qa_Qi_Se_Sá'.split('_'),
+    months: 'Janeiro_Fevereiro_Março_Abril_Maio_Junho_Julho_Agosto_Setembro_Outubro_Novembro_Dezembro'.split('_'),
+    monthsShort: 'Jan_Fev_Mar_Abr_Mai_Jun_Jul_Ago_Set_Out_Nov_Dez'.split('_'),
+    weekdays:
+      'domingo_segunda-feira_terça-feira_quarta-feira_quinta-feira_sexta-feira_sábado'.split('_'),
+    weekdaysShort: 'dom_seg_ter_qua_qui_sex_sáb'.split('_'),
+    weekdaysMin: 'do_2ª_3ª_4ª_5ª_6ª_sá'.split('_'),
+    weekdaysParseExact: true,
     longDateFormat: {
       LT: 'HH:mm',
       LTS: 'HH:mm:ss',
       L: 'DD/MM/YYYY',
-      LL: 'D MMMM YYYY',
-      LLL: 'D MMMM YYYY LT',
-      LLLL: 'dddd D MMMM YYYY LT'
+      LL: 'D [de] MMMM [de] YYYY',
+      LLL: 'D [de] MMMM [de] YYYY [às] HH:mm',
+      LLLL: 'dddd, D [de] MMMM [de] YYYY [às] HH:mm'
     },
     calendar: {
-      sameDay: "[Hoje às] LT",
+      sameDay: '[Hoje às] LT',
       nextDay: '[Amanhã às] LT',
-      nextWeek: 'dddd [no] LT',
+      nextWeek: 'dddd [às] LT',
       lastDay: '[Ontem às] LT',
-      lastWeek: 'dddd [último a] LT',
+      lastWeek: function () {
+        return this.day() === 0 || this.day() === 6
+          ? '[Último] dddd [às] LT' // Saturday + Sunday
+          : '[Última] dddd [às] LT'; // Monday - Friday
+      },
       sameElse: 'L'
     },
     relativeTime: {
       future: 'em %s',
       past: 'há %s',
-      s: 'alguns segundos',
+      s: 'poucos segundos',
+      ss: '%d segundos',
       m: 'um minuto',
       mm: '%d minutos',
       h: 'uma hora',
@@ -52,26 +55,9 @@ const locale = {
       y: 'um ano',
       yy: '%d anos'
     },
-    ordinalParse: /\d{1,2}(é|º)/,
-    ordinal: function(number) {
-      return number + (number === 1 ? 'é' : 'º');
-    },
-    meridiemParse: /AM|PM/,
-    isPM: function(input) {
-      return input.charAt(0) === 'M';
-    },
-    // in case the meridiem units are not separated around 12, then implement
-    // this function (look at locale/id.js for an example)
-    // meridiemHour : function (hour, meridiem) {
-    //     return /* 0-23 hour, given meridiem token and hour 1-12 */
-    // },
-    meridiem: function(hours, minutes, isLower) {
-      return hours < 12 ? 'AM' : 'PM';
-    },
-    week: {
-      dow: 1, // Monday is the first day of the week.
-      doy: 4 // The week that contains Jan 4th is the first week of the year.
-    }
+    dayOfMonthOrdinalParse: /\d{1,2}º/,
+    ordinal: '%dº',
+    invalidDate: 'Data inválida'
   }
 }
 
@@ -87,7 +73,7 @@ export default function App() {
       <View style={styles.container0}>
         <CalendarStrip
           scrollable
-          locale={locale}
+          locale={ptBr}
           selectedDate={selectedDay}
           onDateSelected={date => setSelectedDay(date.subtract(12, 'h'))}
           style={{
