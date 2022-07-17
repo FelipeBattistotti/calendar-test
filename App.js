@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   Text
 } from 'react-native'
-import CalendarStrip from 'react-native-calendar-strip'
+// import CalendarStrip from 'react-native-calendar-strip'
+// import CalendarLine from 'react-native-calendar-line'
+import CalendarLine from './src/CalendarLine'
 import moment from 'moment-timezone'
 
 const ptBr = {
@@ -71,7 +73,7 @@ export default function App() {
     <>
       <StatusBar style="auto" />
       <View style={styles.container0}>
-        <CalendarStrip
+        {/* <CalendarStrip
           scrollable
           locale={ptBr}
           selectedDate={selectedDay}
@@ -92,6 +94,33 @@ export default function App() {
           }}
           dateNameStyle={{
             color: 'white',
+            fontSize: 14
+          }}
+          iconContainer={{flex: 0.1}}
+          daySelectionAnimation={{type: 'border', duration: 200, borderWidth: 1, borderHighlightColor: 'white'}}
+        /> */}
+        <CalendarLine
+          scrollable
+          // locale={ptBr}
+          localeName='pt-br'
+          selectedDate={selectedDay}
+          onDateSelected={date => setSelectedDay(date.subtract(12, 'h'))}
+          style={{
+            height:180,
+            paddingTop: 30,
+            paddingBottom: 10
+          }}
+          // calendarColor={dark ? '#001122' : '#3343CE'}
+          calendarHeaderStyle={{
+            // color: 'white',
+            fontSize: 15
+          }}
+          dateNumberStyle={{
+            // color: 'white',
+            fontSize: 14
+          }}
+          dateNameStyle={{
+            // color: 'white',
             fontSize: 14
           }}
           iconContainer={{flex: 0.1}}
